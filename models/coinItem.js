@@ -118,8 +118,14 @@ var CoinItem = GObject.registerClass(
             let result = await this._getPrice();
             const jsonRes = JSON.parse(result.body);
             let price = jsonRes.lastPrice;
-            let priceChangePercent = parseFloat(jsonRes.priceChangePercent).toFixed(2)
+            let priceChangePercent = parseFloat(jsonRes.priceChangePercent)
             let priceParts = price.split('.');
+
+            if (parseFloat(priceChangePercent) > 0) {
+                priceChangePercent = `+${priceChangePercent.toFixed(2)}`
+            } else {
+                priceChangePercent = priceChangePercent.toFixed(2)
+            }
 
             const totalLen = 6;
             let len = 0;
